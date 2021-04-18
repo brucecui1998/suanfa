@@ -1,0 +1,46 @@
+/*2021年3月20日09点12分
+2021年3月21日09:13:42
+*/
+#include<stdio.h>
+void Merge(int a[],int b[],int left,int mid ,int right)
+{
+	int i=left,j=mid+1,k=left;//这里k=left 
+	while(i<=mid&&j<=right)
+	{
+		if(a[i]<=a[j])
+			b[k++]=a[i++];						
+		else
+			b[k++]=a[j++];		
+	}
+	while(i<=mid)
+		b[k++]=a[i++];
+	while(j<=right)
+		b[k++]=a[j++];
+}
+void Copy(int a[],int b[],int left,int right)
+{
+
+	for(int i=left;i<=right;i++)
+		a[i]=b[i];
+}
+void MergeSort(int a[],int b[],int left,int right)
+{
+	
+	if(left<right)
+	{
+		int mid=(left+right)/2;
+		MergeSort(a,b,left,mid);
+		MergeSort(a,b,mid+1,right);
+		Merge(a,b,left,mid,right);
+		Copy(a,b,left,right);
+	}
+}
+int main()
+{
+	int a[10]={14,63,24,71,4,20,155,32,26,57};
+	int b[10];
+	MergeSort(a,b,0,9);
+	for(int i=0;i<10;i++)
+		printf("%d  ",a[i]); 
+	return 0;
+}

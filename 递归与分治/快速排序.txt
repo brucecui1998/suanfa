@@ -1,0 +1,63 @@
+#include<stdio.h>
+#include<math.h>
+#include<stdlib.h>
+void Swap(int *x,int *y);
+int Partition(int a[],int p,int r);
+void QuickSort(int a[],int p,int r);//常规快速排序 
+int RandomPartition(int a[],int p,int r);
+void RandomQuickSort(int a[],int p,int r);//随机快速排序 
+int main()
+{
+	int a[15]={20,9,2,1,523,21,68,435,2221,89,1,1,1,1,1};
+	RandomQuickSort(a,0,15);
+	for(int i=0;i<15;i++)
+		printf("%d ",a[i]);
+	return 0;
+}
+void QuickSort(int a[],int p,int r)
+{
+	if(p<r)
+	{
+		int q=Partition(a,p,r);
+		QuickSort(a,p,q-1);
+		QuickSort(a,q+1,r);
+	}
+}
+void Swap(int *x,int *y)
+{
+	int t;
+	t=*x;
+	*x=*y;
+	*y=t;
+}
+
+int Partition(int a[],int p,int r)
+{
+	int x=a[p];
+	int i=p,j=r+1;
+	while(1)
+	{
+		while(a[++i]<x);
+		while(a[--j]>x);
+		if(i>=j) break;
+		Swap(&a[i],&a[j]);
+	}
+	a[p]=a[j];
+	a[j]=x;
+	return j;
+}
+int RandomPartition(int a[],int p,int r)
+{
+	int i=p+rand()%(r-p+1);
+	Swap(&a[i],&a[r]);
+	return Partition(a,p,r);
+}
+void RandomQuickSort(int a[],int p,int r)
+{
+	if(p<r)
+	{
+		int q=RandomPartition(a,p,r);
+		RandomQuickSort(a,p,q-1);
+		RandomQuickSort(a,q+1,r);
+	}
+}
